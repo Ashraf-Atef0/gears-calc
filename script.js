@@ -1,58 +1,94 @@
 const form = document.getElementById("form"),
-
   inputZ = document.getElementById("teeth"),
-
   inputM = document.getElementById("module"),
-
   inputA = document.getElementById("angle"),
-
   output = document.getElementById("output"),
-
   select = document.getElementById("type"),
-
-  array = [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100],
-
+  array = [
+    24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+    43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
+    62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+    81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+    100,
+  ],
   rad = Math.PI / 180;
 
+form.addEventListener("submit", function calc(event) {
+  event.preventDefault();
+  // main value
+  let teeth = +inputZ.value,
+    module = +inputM.value,
+    angle = +inputA.value,
+    num = +select.value;
+  // clac value
+  let OutDimeter = ((teeth + 2) * module) / Math.cos(angle * rad),
+    depth = module * 2.25,
+    pitch = (Math.PI * module) / Math.cos(angle * rad),
+    addendum = module,
+    dedendum = module * 1.25,
+    pitchDiameter = (module * teeth) / Math.cos(angle * rad),
+    rootDiameter = pitchDiameter - 2.5 * module,
+    hexil = (num * Math.sin(angle * rad)) / module || 0;
+  console.log(hexil);
+  outPut(
+    teeth,
+    module,
+    angle,
+    OutDimeter,
+    depth,
+    pitch,
+    addendum,
+    dedendum,
+    pitchDiameter,
+    rootDiameter,
+    hexil,
+    Gears(array, hexil)
+  );
+});
+function Gears(arr, n5) {
+  let result = [];
+  let closest = Infinity;
+  arr.sort((a, b) => 0.5 - Math.random());
+  for (let i = 0; i < arr.length - 3; i++) {
+    for (let j = i + 1; j < arr.length - 2; j++) {
+      for (let k = j + 1; k < arr.length - 1; k++) {
+        for (let l = k + 1; l < arr.length; l++) {
+          let n1 = arr[i];
+          let n2 = arr[j];
+          let n3 = arr[k];
+          let n4 = arr[l];
+          let value = Math.abs(((n1 / n2) * n3) / n4 - n5);
 
+          if (value < closest) {
+            closest = value;
+            result = [n1, n2, n3, n4];
+          }
 
-form.addEventListener("submit",
-  function calc(event) {
-    event.preventDefault();
-    // main value
-    let teeth = +inputZ.value,
-      module = +inputM.value,
-      angle = +inputA.value,
-      num = +select.value;
-    // clac value
-    let
-      OutDimeter = ((teeth + 2) * module) / Math.cos(angle * rad),
-      depth = module * 2.25,
-      pitch = (Math.PI * module) / Math.cos(angle * rad),
-      addendum = module,
-      dedendum = module * 1.25,
-      pitchDiameter = (module * teeth) / Math.cos(angle * rad),
-      rootDiameter = pitchDiameter - 2.5 * module,
-      hexil = (num * Math.sin(angle * rad)) / module || 0;
-    outPut(teeth, module, angle, OutDimeter, depth, pitch, addendum, dedendum, pitchDiameter, rootDiameter, hexil, Gears(hexil, num));
-
-  }
-)
-
-function Gears(hexil, num) {
-  if (hexil > 0.001) {
-    while (true) {
-
-      nums = array.sort(() => Math.random() - 0.5).slice(0, 4);
-
-      outHexil = nums[0] / nums[1] * nums[2] / nums[3]
-      if (Math.abs(outHexil - hexil) < 0.0001) {
-        return [nums[0], nums[1], nums[2], nums[3]];
+          if (value === 0) {
+            return result;
+          } else if (value < 1e-6) {
+            return result;
+          }
+        }
       }
     }
-
   }
+
+  return result;
 }
+
+// function Gears(hexil, num) {
+//   if (hexil > 0.001) {
+//     while (true) {
+//       nums = array.sort(() => Math.random() - 0.5).slice(0, 4);
+
+//       outHexil = ((nums[0] / nums[1]) * nums[2]) / nums[3];
+//       if (Math.abs(outHexil - hexil) < 0.0001) {
+//         return [nums[0], nums[1], nums[2], nums[3]];
+//       }
+//     }
+//   }
+// }
 
 function outPut() {
   console.log(arguments);
@@ -73,5 +109,5 @@ function outPut() {
     <p>النسبة الحلزونية : ${arguments[10]}</p>
     <p>التروس المناسب : ${arguments[11]}</p>
 </div>
-`
+`;
 }
