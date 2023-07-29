@@ -57,7 +57,8 @@ input {
   border: none;
   border-radius: 5px;
   padding: 8px;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: bold;
   background-color: #fff;
 }
 select {
@@ -68,6 +69,7 @@ select {
   background: #f9f9f9;
   transition: 300ms border;
   padding-left: 5px;
+  font-weight: bold;
 }
 
 input[type="number"] {
@@ -144,6 +146,9 @@ select:focus {
   border-width: 4px;
   outline: none;
   caret-color: #013a65;
+}
+#output {
+  width: 50%;
 }
 @media (max-width: 780px) {
   body {
