@@ -29,7 +29,6 @@ form.addEventListener("submit", function calc(event) {
     pitchDiameter = (module * teeth) / Math.cos(angle * rad),
     rootDiameter = pitchDiameter - 2.5 * module,
     hexil = (num * Math.sin(angle * rad)) / module || 0;
-  console.log(hexil);
   outPut(
     teeth,
     module,
@@ -91,9 +90,8 @@ function Gears(arr, n5) {
 // }
 
 function outPut() {
-  console.log(arguments);
-
-  output.innerHTML = `
+  if (arguments[10]) {
+    output.innerHTML = `
   <div dir="rtl">
     <h2>القيم الاساسية</h2>
     <p>عدد الاسنان : ${arguments[0]}</p>
@@ -110,4 +108,21 @@ function outPut() {
     <p>التروس المناسب : ${arguments[11]}</p>
 </div>
 `;
+  } else {
+    output.innerHTML = `
+  <div dir="rtl">
+    <h2>القيم الاساسية</h2>
+    <p>عدد الاسنان : ${arguments[0]}</p>
+    <p>الموديول : ${arguments[1]}</p>
+    <p>زاوية الضغط : ${arguments[2]}</p>
+    <p>قطر الخارجي : ${arguments[3]}</p>
+    <p>عمق الاسنان : ${arguments[4]}</p>
+    <p>المسافة بين الاسنان : ${arguments[5]}</p>
+    <p>المسافة بين الاسنان والقطر : ${arguments[6]}</p>
+    <p>المسافة بين الاسنان والقاعدة : ${arguments[7]}</p>
+    <p>قطر الاسنان : ${arguments[8]}</p>
+    <p>قطر الجذر : ${arguments[9]}</p>
+</div>
+`;
+  }
 }
